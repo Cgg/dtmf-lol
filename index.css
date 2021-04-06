@@ -1,0 +1,43 @@
+.keypad {
+  font: 40px sans-serif;
+  display: grid;
+  grid-template-columns: repeat(4, 80px);
+  column-gap: 8px;
+  row-gap: 8px;
+  justify-content: center;
+}
+
+#padEntry {
+  font: inherit;
+  border: 1px solid lightgray;
+  grid-column-start: 1;
+  grid-column-end: span 4;
+  text-align: center;
+  line-height: 77px;
+}
+
+.button {
+  font: inherit;
+  color: white;
+  border-radius: 30px;
+  text-align: center;
+  width: 77px;
+  line-height: 77px;
+  cursor: pointer;
+}
+
+.button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.digit {
+  background: royalblue;
+}
+
+.letter {
+  background: palevioletred;
+}
+
+.symbol {
+  background: gray;
+}
