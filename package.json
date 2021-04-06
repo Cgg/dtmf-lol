@@ -1,0 +1,14 @@
+{
+  "name": "dtmf-lol",
+  "version": "1.0.0",
+  "description": "having fun with webaudio and dtmf and html and css and js",
+  "devDependencies": {
+    "husky": "^6.0.0",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0"
+  },
+  "scripts": {
+    "format": "npx prettier **/*.js **/*.ts **/*.json --write",
+    "postinstall": "husky install"
+  }
+}
