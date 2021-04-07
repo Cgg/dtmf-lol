@@ -21,7 +21,7 @@ document.addEventListener("mousedown", ({ target }) => {
 document.addEventListener("keydown", (e) => {
   const { key, repeat } = e;
 
-  if (repeat) {
+  if (repeat && key !== "Backspace") {
     return;
   }
 
