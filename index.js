@@ -14,7 +14,7 @@ padEntry.addEventListener("keydown", (e) => {
 
 document.addEventListener("mousedown", ({ target }) => {
   if (target.classList.contains(btnClass)) {
-    setEntryText(padEntry.value + innerText);
+    setEntryText(padEntry.value + target.innerText);
   }
 });
 
