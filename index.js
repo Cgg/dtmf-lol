@@ -5,6 +5,8 @@ const playBtn = document.getElementById("play");
 const btnClass = "button";
 const validKeys = "1234567890*#abcd";
 
+const player = new DtmfPlayer(new AudioContext());
+
 function setEntryText(text) {
   padEntry.value = text;
   [backspaceBtn, playBtn].forEach((b) =>
@@ -22,6 +24,7 @@ document.addEventListener("mousedown", ({ target: { id, innerText } }) => {
   if (id.length > 0) {
     if (validKeys.indexOf(id) !== -1) {
       setEntryText(padEntry.value + innerText);
+      player.startTone(id);
     } else if (id === backspaceKey) {
       setEntryText(padEntry.value.slice(0, -1));
     }
@@ -35,7 +38,9 @@ document.addEventListener("keydown", ({ key, repeat }) => {
 
   if (validKeys.indexOf(key) !== -1) {
     const entry = key.toUpperCase();
+
     setEntryText(padEntry.value + entry);
+    player.startTone(key);
 
     if (document.activeElement !== padEntry) {
       document.getElementById(key).focus();
@@ -54,9 +59,12 @@ document.addEventListener("keydown", ({ key, repeat }) => {
   }
 });
 
-document.addEventListener("mouseup", () => {});
+document.addEventListener("mouseup", ({ target: { id } }) => {
+  player.stop(id);
+});
 
 document.addEventListener("keyup", ({ key }) => {
+  player.stop(key);
   if (
     document.activeElement !== padEntry &&
     (validKeys.indexOf(key) !== -1 || key === backspaceKey)
