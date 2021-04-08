@@ -1,9 +1,12 @@
 const padEntry = document.getElementById("padEntry");
+const backspaceKey = "Backspace";
+const backspaceBtn = document.getElementById(backspaceKey);
 const btnClass = "button";
 const validKeys = "1234567890*#abcd";
 
 function setEntryText(text) {
   padEntry.value = text;
+  backspaceBtn.classList.toggle("hidden", text.length === 0);
 }
 
 padEntry.addEventListener("keydown", (e) => {
@@ -12,16 +15,18 @@ padEntry.addEventListener("keydown", (e) => {
   }
 });
 
-document.addEventListener("mousedown", ({ target }) => {
-  if (target.classList.contains(btnClass)) {
-    setEntryText(padEntry.value + target.innerText);
+document.addEventListener("mousedown", ({ target: { id, innerText } }) => {
+  if (id.length > 0) {
+    if (validKeys.indexOf(id) !== -1) {
+      setEntryText(padEntry.value + innerText);
+    } else if (id === backspaceKey) {
+      setEntryText(padEntry.value.slice(0, -1));
+    }
   }
 });
 
-document.addEventListener("keydown", (e) => {
-  const { key, repeat } = e;
-
-  if (repeat && key !== "Backspace") {
+document.addEventListener("keydown", ({ key, repeat }) => {
+  if (repeat && key !== backspaceKey) {
     return;
   }
 
@@ -30,13 +35,13 @@ document.addEventListener("keydown", (e) => {
     setEntryText(padEntry.value + entry);
 
     if (document.activeElement !== padEntry) {
-      document.getElementById(entry).focus();
+      document.getElementById(key).focus();
     }
-  } else if (key === "Backspace" && padEntry.value.length > 0) {
+  } else if (key === backspaceKey && padEntry.value.length > 0) {
     setEntryText(padEntry.value.slice(0, -1));
 
     if (document.activeElement !== padEntry) {
-      document.activeElement.blur();
+      backspaceBtn.focus();
     }
   } else if (key === " ") {
     const activeElement = document.activeElement;
@@ -49,7 +54,12 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("mouseup", () => {});
 
 document.addEventListener("keyup", ({ key }) => {
-  if (document.activeElement !== padEntry && validKeys.indexOf(key) !== -1) {
+  if (
+    document.activeElement !== padEntry &&
+    (validKeys.indexOf(key) !== -1 || key === backspaceKey)
+  ) {
     document.activeElement.blur();
   }
 });
+
+setEntryText(padEntry.value);
