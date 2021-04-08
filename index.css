@@ -45,6 +45,7 @@
 .control {
   grid-row-start: 6;
   justify-self: center;
+  transition: opacity 0.2s, visibility 0.2s;
 }
 
 #play {
@@ -60,7 +61,6 @@
   color: lightgray;
   grid-column-start: 3;
   font-size: 35px;
-  transition: opacity 0.2s, visibility 0.2s;
 }
 
 .hidden {

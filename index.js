@@ -1,12 +1,15 @@
 const padEntry = document.getElementById("padEntry");
 const backspaceKey = "Backspace";
 const backspaceBtn = document.getElementById(backspaceKey);
+const playBtn = document.getElementById("play");
 const btnClass = "button";
 const validKeys = "1234567890*#abcd";
 
 function setEntryText(text) {
   padEntry.value = text;
-  backspaceBtn.classList.toggle("hidden", text.length === 0);
+  [backspaceBtn, playBtn].forEach((b) =>
+    b.classList.toggle("hidden", text.length === 0)
+  );
 }
 
 padEntry.addEventListener("keydown", (e) => {
