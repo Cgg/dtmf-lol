@@ -5,7 +5,9 @@ const playBtn = document.getElementById("play");
 const btnClass = "button";
 const validKeys = "1234567890*#abcd";
 
-const player = new DtmfPlayer(new AudioContext());
+const player = new DtmfPlayer(
+  new (window.AudioContext || window.webkitAudioContext)()
+);
 
 function setEntryText(text) {
   padEntry.value = text;

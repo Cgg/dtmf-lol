@@ -31,16 +31,19 @@ const oscillatorsForTone = (tone, audioCtx) => {
   const x = idx % 4;
   const y = (idx - x) / 4;
 
-  return [xFreqs[x], yFreqs[y]].map(
-    (frequency) => new OscillatorNode(audioCtx, { frequency })
-  );
+  return [xFreqs[x], yFreqs[y]].map((frequency) => {
+    const osc = audioCtx.createOscillator();
+    osc.frequency.value = frequency;
+    return osc;
+  });
 };
 
 class DtmfTone {
   constructor(tone, audioCtx) {
     this._osc = oscillatorsForTone(tone.toLowerCase(), audioCtx);
     this._osc.forEach((o) => {
-      const g = new GainNode(audioCtx, { gain: 0.4 });
+      const g = audioCtx.createGain();
+      g.gain.value = 0.4;
       o.connect(g).connect(audioCtx.destination);
     });
   }
