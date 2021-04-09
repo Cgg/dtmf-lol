@@ -5,8 +5,9 @@ const playBtn = document.getElementById("play");
 const btnClass = "button";
 const validKeys = "1234567890*#abcd";
 
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const player = new DtmfPlayer(
-  new (window.AudioContext || window.webkitAudioContext)()
+  audioCtx
 );
 
 function setEntryText(text) {
@@ -23,6 +24,7 @@ padEntry.addEventListener("keydown", (e) => {
 });
 
 document.addEventListener("mousedown", ({ target: { id, innerText } }) => {
+  audioCtx.resume();
   if (id.length > 0) {
     if (validKeys.indexOf(id) !== -1) {
       setEntryText(padEntry.value + innerText);
@@ -34,6 +36,8 @@ document.addEventListener("mousedown", ({ target: { id, innerText } }) => {
 });
 
 document.addEventListener("keydown", ({ key, repeat }) => {
+  audioCtx.resume();
+
   if (repeat && key !== backspaceKey) {
     return;
   }
