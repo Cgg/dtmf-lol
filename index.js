@@ -4,11 +4,10 @@ const backspaceBtn = document.getElementById(backspaceKey);
 const playBtn = document.getElementById("play");
 const btnClass = "button";
 const validKeys = "1234567890*#abcd";
-
+let onGoingTouchCount = 0;
+let keyDownCount = 0;
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const player = new DtmfPlayer(
-  audioCtx
-);
+const player = new DtmfPlayer(audioCtx);
 
 function setEntryText(text) {
   padEntry.value = text;
@@ -17,14 +16,10 @@ function setEntryText(text) {
   );
 }
 
-padEntry.addEventListener("keydown", (e) => {
-  if (e.key !== "Tab") {
-    e.preventDefault();
-  }
-});
-
-document.addEventListener("mousedown", ({ target: { id, innerText } }) => {
-  audioCtx.resume();
+function handleTouchOrMouseEvent(e) {
+  const {
+    target: { id, innerText },
+  } = e;
   if (id.length > 0) {
     if (validKeys.indexOf(id) !== -1) {
       setEntryText(padEntry.value + innerText);
@@ -33,12 +28,56 @@ document.addEventListener("mousedown", ({ target: { id, innerText } }) => {
       setEntryText(padEntry.value.slice(0, -1));
     }
   }
+}
+
+padEntry.addEventListener("keydown", (e) => {
+  if (e.key !== "Tab") {
+    e.preventDefault();
+  }
 });
+
+// Touch handlers
+
+document.addEventListener("touchstart", (e) => {
+  audioCtx.resume();
+  e.preventDefault();
+  if (onGoingTouchCount === 0) {
+    handleTouchOrMouseEvent(e);
+  }
+  onGoingTouchCount += 1;
+});
+
+document.addEventListener("touchend", (e) => {
+  e.preventDefault();
+  onGoingTouchCount = Math.max(onGoingTouchCount - 1, 0);
+  if (onGoingTouchCount === 0) {
+    player.stopAll();
+  }
+});
+
+// Mouse handlers
+
+document.addEventListener("mousedown", (e) => {
+  audioCtx.resume();
+  handleTouchOrMouseEvent(e);
+});
+
+document.addEventListener("mouseup", () => {
+  player.stopAll();
+});
+
+// Keyboard handlers
 
 document.addEventListener("keydown", ({ key, repeat }) => {
   audioCtx.resume();
 
   if (repeat && key !== backspaceKey) {
+    return;
+  }
+
+  keyDownCount += repeat ? 0 : 1;
+
+  if (keyDownCount > 1) {
     return;
   }
 
@@ -65,12 +104,14 @@ document.addEventListener("keydown", ({ key, repeat }) => {
   }
 });
 
-document.addEventListener("mouseup", ({ target: { id } }) => {
-  player.stop(id);
-});
-
 document.addEventListener("keyup", ({ key }) => {
-  player.stop(key);
+  keyDownCount = Math.max(keyDownCount - 1, 0);
+  if (keyDownCount > 0) {
+    return;
+  }
+
+  player.stopAll();
+
   if (
     document.activeElement !== padEntry &&
     (validKeys.indexOf(key) !== -1 || key === backspaceKey)
