@@ -84,4 +84,11 @@ class DtmfPlayer {
       delete this._tones[t];
     }
   }
+
+  stopAll() {
+    for (const tone of Object.values(this._tones)) {
+      tone.stop();
+    }
+    this._tones = {};
+  }
 }
