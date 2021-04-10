@@ -40,7 +40,8 @@ const oscillatorsForTone = (tone, audioCtx) => {
 
 class DtmfTone {
   constructor(tone, audioCtx) {
-    const g = audioCtx.createGain();
+    this._ctx = audioCtx;
+    const g = (this._gain = audioCtx.createGain());
     g.gain.setValueAtTime(0.4, audioCtx.currentTime);
     g.connect(audioCtx.destination);
     this._osc = oscillatorsForTone(tone.toLowerCase(), audioCtx);
@@ -52,14 +53,14 @@ class DtmfTone {
         "Cannot start a tone that was stopped; make another one."
       );
     }
+    //this._gain.gain.setTargetAtTime(0.4, this._ctx.currentTime + 0.1, 0.01);
     this._osc.forEach((o) => o.start());
   }
   stop() {
+    this._gain.gain.setTargetAtTime(0, this._ctx.currentTime + 0.01, 0.03);
     this._osc.forEach((o) => {
-      o.stop();
-      o.disconnect();
+      o.stop(this._ctx.currentTime + 1);
     });
-    this._osc = undefined;
   }
 }
 
