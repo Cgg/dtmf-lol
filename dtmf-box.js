@@ -40,12 +40,11 @@ const oscillatorsForTone = (tone, audioCtx) => {
 
 class DtmfTone {
   constructor(tone, audioCtx) {
+    const g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.4, audioCtx.currentTime);
+    g.connect(audioCtx.destination);
     this._osc = oscillatorsForTone(tone.toLowerCase(), audioCtx);
-    this._osc.forEach((o) => {
-      const g = audioCtx.createGain();
-      g.gain.value = 0.4;
-      o.connect(g).connect(audioCtx.destination);
-    });
+    this._osc.forEach((o) => o.connect(g));
   }
   start() {
     if (this._osc === undefined) {
