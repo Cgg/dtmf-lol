@@ -78,7 +78,7 @@ document.addEventListener("keydown", ({ key, repeat }) => {
     return;
   }
 
-  keyDownCount += repeat ? 0 : 1;
+  keyDownCount += repeat || key === "Shift" ? 0 : 1;
 
   if (keyDownCount > 1) {
     return;
