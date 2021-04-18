@@ -1,7 +1,8 @@
 const padEntry = document.getElementById("padEntry");
 const backspaceKey = "Backspace";
 const backspaceBtn = document.getElementById(backspaceKey);
-const playBtn = document.getElementById("play");
+const playId = "play";
+const playBtn = document.getElementById(playId);
 const btnClass = "button";
 const validKeys = "1234567890*#abcd";
 let onGoingTouchCount = 0;
@@ -26,6 +27,8 @@ function handleTouchOrMouseEvent(e) {
       player.startTone(id);
     } else if (id === backspaceKey) {
       setEntryText(padEntry.value.slice(0, -1));
+    } else if (id === playId) {
+      playDtmfSequence(padEntry.value, audioCtx);
     }
   }
 }
@@ -51,7 +54,7 @@ document.addEventListener("touchend", (e) => {
   e.preventDefault();
   onGoingTouchCount = Math.max(onGoingTouchCount - 1, 0);
   if (onGoingTouchCount === 0) {
-    player.stopAll();
+    player.stop();
   }
 });
 
@@ -63,7 +66,7 @@ document.addEventListener("mousedown", (e) => {
 });
 
 document.addEventListener("mouseup", () => {
-  player.stopAll();
+  player.stop();
 });
 
 // Keyboard handlers
@@ -110,7 +113,7 @@ document.addEventListener("keyup", ({ key }) => {
     return;
   }
 
-  player.stopAll();
+  player.stop();
 
   if (
     document.activeElement !== padEntry &&

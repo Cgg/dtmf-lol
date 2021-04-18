@@ -47,19 +47,19 @@ class DtmfTone {
     this._osc = oscillatorsForTone(tone.toLowerCase(), audioCtx);
     this._osc.forEach((o) => o.connect(g));
   }
-  start() {
+  start(time = 0) {
     if (this._osc === undefined) {
       throw new Error(
         "Cannot start a tone that was stopped; make another one."
       );
     }
     //this._gain.gain.setTargetAtTime(0.4, this._ctx.currentTime + 0.1, 0.01);
-    this._osc.forEach((o) => o.start());
+    this._osc.forEach((o) => o.start(time));
   }
-  stop() {
-    this._gain.gain.setTargetAtTime(0, this._ctx.currentTime + 0.01, 0.03);
+  stop(time = this._ctx.currentTime) {
+    this._gain.gain.setTargetAtTime(0, time + 0.01, 0.03);
     this._osc.forEach((o) => {
-      o.stop(this._ctx.currentTime + 1);
+      o.stop(time + 1);
     });
   }
 }
@@ -67,28 +67,36 @@ class DtmfTone {
 class DtmfPlayer {
   constructor(audioCtx) {
     this._ctx = audioCtx;
-    this._tones = {};
+    this._currentTone = undefined;
   }
 
   startTone(t) {
-    this.stop(t);
-    const tone = (this._tones[t] = new DtmfTone(t, this._ctx));
+    this.stop();
+    const tone = (this._currentTone = new DtmfTone(t, this._ctx));
     tone.start();
   }
 
-  playSequence(seq) {}
-
-  stop(t) {
-    if (this._tones[t] !== undefined) {
-      this._tones[t].stop();
-      delete this._tones[t];
+  stop() {
+    if (this._currentTone !== undefined) {
+      this._currentTone.stop();
+      this._currentTone = undefined;
     }
   }
+}
 
-  stopAll() {
-    for (const tone of Object.values(this._tones)) {
-      tone.stop();
-    }
-    this._tones = {};
-  }
+function playDtmfSequence(seq, audioCtx) {
+  seq = [...seq];
+
+  const seqStartTime = audioCtx.currentTime + 0.1;
+  const toneDuration = 0.2;
+  const toneInterval = 0.05;
+
+  const tones = seq.map((t) => new DtmfTone(t, audioCtx));
+
+  tones.forEach((t, index) => {
+    const toneStartTime = seqStartTime + (toneDuration + toneInterval) * index;
+
+    t.start(toneStartTime);
+    t.stop(toneStartTime + toneDuration);
+  });
 }
