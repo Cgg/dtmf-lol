@@ -20,6 +20,8 @@ const toneIdx = {
   d: 15,
 };
 
+const toneMinDuration = 0.2;
+
 const oscillatorsForTone = (tone, audioCtx) => {
   if (!tone in toneIdx) {
     throw new Error(`Unrecognised tone: ${tone}`);
@@ -46,17 +48,24 @@ class DtmfTone {
     g.connect(audioCtx.destination);
     this._osc = oscillatorsForTone(tone.toLowerCase(), audioCtx);
     this._osc.forEach((o) => o.connect(g));
+
+    this._startTime = undefined;
   }
-  start(time = 0) {
+
+  start(time = this._ctx.currentTime) {
     if (this._osc === undefined) {
       throw new Error(
         "Cannot start a tone that was stopped; make another one."
       );
     }
-    //this._gain.gain.setTargetAtTime(0.4, this._ctx.currentTime + 0.1, 0.01);
+    this._startTime = time;
+    this._gain.gain.setTargetAtTime(0.4, time + 0.1, 0.01);
     this._osc.forEach((o) => o.start(time));
   }
+
   stop(time = this._ctx.currentTime) {
+    time = Math.max(time, this._startTime + toneMinDuration);
+    this._gain.gain.cancelScheduledValues(time);
     this._gain.gain.setTargetAtTime(0, time + 0.01, 0.03);
     this._osc.forEach((o) => {
       o.stop(time + 1);
