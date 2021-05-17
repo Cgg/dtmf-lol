@@ -9,11 +9,20 @@
 
 #padEntry {
   font: inherit;
-  border: 1px solid lightgray;
-  grid-column-start: 1;
-  grid-column-end: span 4;
   text-align: center;
   line-height: 77px;
+}
+
+#waveformScope {
+  height: 100px;
+  width: 100%;
+}
+
+.fullLineDisplay {
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  grid-column-start: 1;
+  grid-column-end: span 4;
 }
 
 .button {
@@ -43,7 +52,7 @@
 }
 
 .control {
-  grid-row-start: 6;
+  grid-row-start: 7;
   justify-self: center;
   transition: opacity 0.2s, visibility 0.2s;
 }
