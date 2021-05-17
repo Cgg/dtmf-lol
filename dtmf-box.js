@@ -41,15 +41,16 @@ const oscillatorsForTone = (tone, audioCtx) => {
 };
 
 class DtmfTone {
-  constructor(tone, audioCtx) {
+  constructor(tone, out, audioCtx) {
     this._ctx = audioCtx;
     const g = (this._gain = audioCtx.createGain());
     g.gain.setValueAtTime(0.4, audioCtx.currentTime);
-    g.connect(audioCtx.destination);
     this._osc = oscillatorsForTone(tone.toLowerCase(), audioCtx);
     this._osc.forEach((o) => o.connect(g));
 
     this._startTime = undefined;
+
+    g.connect(out);
   }
 
   start(time = this._ctx.currentTime) {
@@ -74,14 +75,15 @@ class DtmfTone {
 }
 
 class DtmfPlayer {
-  constructor(audioCtx) {
+  constructor(out, audioCtx) {
     this._ctx = audioCtx;
+    this._out = out;
     this._currentTone = undefined;
   }
 
   startTone(t) {
     this.stop();
-    const tone = (this._currentTone = new DtmfTone(t, this._ctx));
+    const tone = (this._currentTone = new DtmfTone(t, this._out, this._ctx));
     tone.start();
   }
 
@@ -93,14 +95,14 @@ class DtmfPlayer {
   }
 }
 
-function playDtmfSequence(seq, audioCtx) {
+function playDtmfSequence(seq, out, audioCtx) {
   seq = [...seq];
 
   const seqStartTime = audioCtx.currentTime + 0.1;
   const toneDuration = 0.2;
   const toneInterval = 0.05;
 
-  const tones = seq.map((t) => new DtmfTone(t, audioCtx));
+  const tones = seq.map((t) => new DtmfTone(t, out, audioCtx));
 
   tones.forEach((t, index) => {
     const toneStartTime = seqStartTime + (toneDuration + toneInterval) * index;

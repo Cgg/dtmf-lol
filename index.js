@@ -8,7 +8,7 @@ const validKeys = "1234567890*#abcd";
 let onGoingTouchCount = 0;
 let keyDownCount = 0;
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const player = new DtmfPlayer(audioCtx);
+const player = new DtmfPlayer(audioCtx.destination, audioCtx);
 
 function setEntryText(text) {
   padEntry.value = text;
@@ -28,7 +28,7 @@ function handleTouchOrMouseEvent(e) {
     } else if (id === backspaceKey) {
       setEntryText(padEntry.value.slice(0, -1));
     } else if (id === playId) {
-      playDtmfSequence(padEntry.value, audioCtx);
+      playDtmfSequence(padEntry.value, audioCtx.destination, audioCtx);
     }
   }
 }
