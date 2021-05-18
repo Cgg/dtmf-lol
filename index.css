@@ -1,4 +1,10 @@
-.keypad {
+#top {
+  display: grid;
+  grid-template-columns: repeat(2, 360px);
+  column-gap: 12px;
+}
+
+#keypad {
   font: 40px sans-serif;
   display: grid;
   grid-template-columns: repeat(4, 80px);
@@ -7,18 +13,28 @@
   justify-content: center;
 }
 
+#output {
+  display: grid;
+  grid-template-columns: repeat(4, 80px);
+  row-gap: 8px;
+  column-gap: 8px;
+  justify-content: center;
+  align-content: stretch;
+}
+
 #padEntry {
   font: inherit;
   text-align: center;
   line-height: 77px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  grid-column-start: 1;
+  grid-column-end: span 4;
 }
 
-#waveformScope {
-  height: 100px;
+.scope {
+  height: 100%;
   width: 100%;
-}
-
-.fullLineDisplay {
   border: 1px solid lightgray;
   border-radius: 10px;
   grid-column-start: 1;

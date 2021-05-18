@@ -18,6 +18,11 @@ const waveformScope = new WaveformScope(
   document.getElementById("waveformScope")
 );
 waveformScope.draw();
+const freqScope = new FrequencyScope(
+  analyserNode,
+  document.getElementById("frequencyScope")
+);
+freqScope.draw();
 
 const player = new DtmfPlayer(analyserNode, audioCtx);
 
