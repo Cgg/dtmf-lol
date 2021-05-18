@@ -33,12 +33,12 @@
 }
 
 .scope {
-  height: 100%;
   width: 100%;
   border: 1px solid lightgray;
   border-radius: 10px;
   grid-column-start: 1;
   grid-column-end: span 4;
+  align-self: stretch;
 }
 
 .button {
