@@ -72,3 +72,20 @@ class FrequencyScope {
     ctx.stroke();
   }
 }
+
+function initScopes(source, audioCtx) {
+  const analyserNode = audioCtx.createAnalyser();
+  source.connect(analyserNode);
+
+  const waveformScope = new WaveformScope(
+    analyserNode,
+    document.getElementById("waveformScope")
+  );
+  waveformScope.draw();
+
+  const freqScope = new FrequencyScope(
+    analyserNode,
+    document.getElementById("frequencyScope")
+  );
+  freqScope.draw();
+}

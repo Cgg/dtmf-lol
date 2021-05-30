@@ -15,7 +15,7 @@
   <body>
     <div id="top">
       <div id="keypad">
-        <input id="padEntry" class="fullLineDisplay" type="text" />
+        <input id="padEntry" type="text" class="numberDisplay" />
         <button id="1" class="button digit">1</button>
         <button id="2" class="button digit">2</button>
         <button id="3" class="button digit">3</button>
@@ -36,10 +36,12 @@
         <button id="Backspace" class="button control hidden">⌫</button>
       </div>
       <div id="output">
+        <input id="outputLabel" type="text" class="numberDisplay" readonly />
         <canvas id="waveformScope" class="scope"></canvas>
         <canvas id="frequencyScope" class="scope"></canvas>
       </div>
     </div>
+    <script src="dtmf-analyser.js"></script>
     <script src="analyser-scopes.js"></script>
     <script src="dtmf-box.js"></script>
     <script src="index.js"></script>

@@ -100,7 +100,7 @@ function playDtmfSequence(seq, out, audioCtx) {
 
   const seqStartTime = audioCtx.currentTime + 0.1;
   const toneDuration = 0.2;
-  const toneInterval = 0.05;
+  const toneInterval = 0.06;
 
   const tones = seq.map((t) => new DtmfTone(t, out, audioCtx));
 

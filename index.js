@@ -1,4 +1,5 @@
 const padEntry = document.getElementById("padEntry");
+const outputLabel = document.getElementById("outputLabel");
 const backspaceKey = "Backspace";
 const backspaceBtn = document.getElementById(backspaceKey);
 const playId = "play";
@@ -9,22 +10,16 @@ let onGoingTouchCount = 0;
 let keyDownCount = 0;
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const passThrough = audioCtx.createGain();
+passThrough.connect(audioCtx.destination);
 
-const analyserNode = audioCtx.createAnalyser();
-analyserNode.connect(audioCtx.destination);
+const player = new DtmfPlayer(passThrough, audioCtx);
 
-const waveformScope = new WaveformScope(
-  analyserNode,
-  document.getElementById("waveformScope")
-);
-waveformScope.draw();
-const freqScope = new FrequencyScope(
-  analyserNode,
-  document.getElementById("frequencyScope")
-);
-freqScope.draw();
+const dtmfAnalyser = new DtmfAnalyser(passThrough, audioCtx, (t) => {
+  outputLabel.value = outputLabel.value + t;
+});
 
-const player = new DtmfPlayer(analyserNode, audioCtx);
+initScopes(passThrough, audioCtx);
 
 function setEntryText(text) {
   padEntry.value = text;
@@ -44,7 +39,8 @@ function handleTouchOrMouseEvent(e) {
     } else if (id === backspaceKey) {
       setEntryText(padEntry.value.slice(0, -1));
     } else if (id === playId) {
-      playDtmfSequence(padEntry.value, analyserNode, audioCtx);
+      outputLabel.value = "";
+      playDtmfSequence(padEntry.value, passThrough, audioCtx);
     }
   }
 }
