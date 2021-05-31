@@ -1,19 +1,19 @@
 #top {
   font: 40px sans-serif;
   display: grid;
-  grid-template-columns: repeat(2, 360px);
+  grid-template-columns: repeat(2, minmax(200px, 360px));
   grid-gap: 12px;
 }
 
 #keypad {
   display: grid;
-  grid-template-columns: repeat(4, 80px);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 8px;
 }
 
 #output {
   display: grid;
-  grid-template-columns: repeat(4, 80px);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: min-content;
   grid-gap: 8px;
 }
@@ -31,6 +31,10 @@
   border-radius: 10px;
   grid-column-start: 1;
   grid-column-end: span 4;
+  /* Needed so that the input width is correctly set in Firefox. It would
+   * badly overflow otherwise.
+   * See: https://stackoverflow.com/questions/43314921/strange-input-widths-in-firefox-vs-chrome*/
+  min-width: 0;
 }
 
 .scope {
@@ -47,7 +51,6 @@
   color: white;
   border-radius: 30px;
   text-align: center;
-  width: 77px;
   line-height: 77px;
   cursor: pointer;
 }
@@ -70,7 +73,6 @@
 
 .control {
   grid-row-start: 6;
-  justify-self: center;
   transition: opacity 0.2s, visibility 0.2s;
 }
 
