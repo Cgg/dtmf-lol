@@ -1,3 +1,16 @@
+body {
+  margin-top: 0px;
+}
+
+small {
+  font-size: 65%;
+}
+
+a {
+  color: #428bca;
+  text-decoration: none;
+}
+
 #top {
   font: 40px sans-serif;
   display: grid;
@@ -5,20 +18,35 @@
   grid-gap: 12px;
 }
 
-#keypad {
+.subGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 8px;
+  grid-row-start: 3;
+}
+
+#title {
+  font-size: 25px;
+  margin-bottom: 10px;
+  grid-column: 1/3;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+#blurb {
+  font-size: initial;
+  grid-column: 1/4;
+}
+
+#blurbText[class="hidden"] {
+  display: none;
 }
 
 #output {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: min-content;
-  grid-gap: 8px;
 }
 
-.topLabel {
+.gridLabel {
   font: 20px sans-serif;
   margin-left: 15px;
 }
