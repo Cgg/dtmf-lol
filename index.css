@@ -15,12 +15,14 @@ a {
   font: 40px sans-serif;
   display: grid;
   grid-template-columns: repeat(2, minmax(200px, 360px));
+  grid-template-rows: auto auto 1fr;
   grid-gap: 12px;
 }
 
 .subGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: min-content;
   grid-gap: 8px;
   grid-row-start: 3;
 }
@@ -28,14 +30,15 @@ a {
 #title {
   font-size: 25px;
   margin-bottom: 10px;
-  grid-column: 1/3;
+  grid-column: 1/4;
   font-weight: 500;
   line-height: 1.1;
 }
 
-#blurb {
+#blurbText {
   font-size: initial;
-  grid-column: 1/4;
+  grid-column: 4;
+  grid-row: 1/4;
 }
 
 #blurbText[class="hidden"] {
