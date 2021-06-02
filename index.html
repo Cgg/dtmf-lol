@@ -19,25 +19,42 @@
       </h2>
       <div id="blurbText" class="hidden">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu
-          justo lacus. Nullam ac ipsum vel dolor fermentum scelerisque. Etiam
-          dapibus maximus elit, a feugiat ante tristique vitae. Donec
-          consectetur libero lobortis, convallis dolor a, rhoncus tortor. Ut
-          porttitor lobortis lorem, id ullamcorper libero maximus sit amet.
-          Nullam sagittis aliquet neque maximus tincidunt. Quisque pharetra,
-          magna quis dictum tristique, augue dolor mollis justo, id blandit sem
-          nisi in dolor.
+          This page implements a DTMF keyboard/tone generator, and a DTMF tone
+          decoder.
         </p>
 
         <p>
-          Donec cursus magna fringilla massa efficitur, in molestie est
-          scelerisque. Nunc aliquet placerat lectus, in hendrerit leo lobortis
-          dapibus. Vestibulum sagittis venenatis felis non molestie. Aenean
-          tincidunt tellus nec velit venenatis iaculis. Donec erat mi, facilisis
-          molestie augue vel, lacinia ultrices leo. Suspendisse condimentum
-          magna sed congue varius. Pellentesque ac nulla ac eros venenatis
-          maximus quis eu nulla. Praesent ut lectus nisl.
+          <a
+            href="https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling"
+            >DTMF (Dual Tone Multi-Frequency)</a
+          >
+          signalling is the technic used to transmit numbers and some symbols
+          over the voice frequency band on a telephone line. It's the tones
+          heard when a number is dialled, or when pressing buttons to navigate
+          through a call center's menus over the phone. It's also part of the
+          56k dial-up routine as explained
+          <a
+            href="http://www.windytan.com/2012/11/the-sound-of-dialup-pictured.html"
+            >here</a
+          >.
         </p>
+
+        <ul>
+          <li>
+            The left-hand side of the page lets you generate DTMF tones via the
+            on-screen keypad. It shows the digits and symbols entered so far and
+            offer an option to replay them in a row.
+          </li>
+
+          <li>
+            The right-hand side of the page listens to any sound produced by the
+            left-hand side, and tries to detect DTMF tones in it. It appends any
+            numbers detected in an output field, and shows soundwave and
+            frequency visualisations, because why not. It appends any numbers
+            detected in an output field, and show soundwave and frequency
+            visualisations, because why not.
+          </li>
+        </ul>
       </div>
       <span class="gridLabel">Input</span>
       <span class="gridLabel">Decoded Output</span>
