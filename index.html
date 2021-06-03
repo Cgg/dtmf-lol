@@ -56,7 +56,15 @@
           </li>
         </ul>
       </div>
-      <span class="gridLabel">Input</span>
+      <div class="gridLabel">
+        <span>Input:</span>
+        <div class="radioContainer">
+          <input type="radio" id="keyboardInput" name="inputInput" checked />
+          <label for="keyboardInput">Keyboard</label>
+          <input type="radio" id="micInput" name="inputInput" />
+          <label for="micInput">Mic</label>
+        </div>
+      </div>
       <span class="gridLabel">Decoded Output</span>
       <div id="keypad" class="subGrid">
         <input id="padEntry" type="text" class="numberDisplay" />

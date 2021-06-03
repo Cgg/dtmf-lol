@@ -51,6 +51,8 @@ li ~ li {
 }
 
 .gridLabel {
+  display: flex;
+  column-gap: 7px;
   font: 20px sans-serif;
   margin-left: 15px;
 }
@@ -125,5 +127,31 @@ li ~ li {
 
 .hidden {
   visibility: hidden;
+  opacity: 0;
+}
+
+.radioContainer {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+}
+
+.radioContainer label {
+  font-size: initial;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 2px solid gray;
+  border-radius: 4px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.radioContainer input:checked + label {
+  border-color: red;
+  background: pink;
+}
+
+.radioContainer input {
+  position: fixed;
+  width: 0;
   opacity: 0;
 }
