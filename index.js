@@ -143,7 +143,7 @@ const updateBlurbVisibility = (showing) => {
   blurbLink.innerText = showing ? "Ok!" : "Huh?";
   document
     .getElementById("blurbText")
-    .classList[showing ? "remove" : "add"]("hidden");
+    .classList[showing ? "remove" : "add"]("blurbHidden");
 };
 
 blurbLink.addEventListener("click", () => {

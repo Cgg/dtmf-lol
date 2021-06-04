@@ -1,5 +1,6 @@
 body {
   margin-top: 0px;
+  font-family: sans-serif;
 }
 
 small {
@@ -16,24 +17,32 @@ li ~ li {
 }
 
 #top {
-  font: 40px sans-serif;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(200px, 360px)) 1fr;
-  grid-template-rows: auto auto auto 1fr;
-  grid-gap: 12px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  font-size: 40px;
+  flex-wrap: wrap;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  max-width: 360px;
+  min-width: 250px;
 }
 
 .subGrid {
+  flex-grow: 2;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: min-content;
   grid-gap: 8px;
-  grid-row-start: 3;
 }
 
 #title {
   font-size: 25px;
-  margin-bottom: 10px;
+  margin-bottom: 22px;
   grid-column: 1/4;
   font-weight: 500;
   line-height: 1.1;
@@ -46,8 +55,8 @@ li ~ li {
   transition: opacity 0.2s, visibility 0.2s;
 }
 
-#output {
-  grid-template-rows: min-content;
+.blurbHidden {
+  display: none;
 }
 
 .gridLabel {
