@@ -136,19 +136,3 @@ document.addEventListener("keyup", ({ key }) => {
 });
 
 setEntryText(padEntry.value);
-
-const blurbLink = document.querySelector("#huh a");
-
-const updateBlurbVisibility = (showing) => {
-  blurbLink.innerText = showing ? "Ok!" : "Huh?";
-  document
-    .getElementById("blurbText")
-    .classList[showing ? "remove" : "add"]("blurbHidden");
-};
-
-blurbLink.addEventListener("click", () => {
-  const showing = blurbLink.innerText === "Huh?" ? true : false;
-  updateBlurbVisibility(showing);
-});
-
-updateBlurbVisibility(false);

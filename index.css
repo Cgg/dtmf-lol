@@ -7,13 +7,41 @@ small {
   font-size: 65%;
 }
 
-a {
-  color: #428bca;
-  text-decoration: none;
-}
-
 li ~ li {
   margin-top: 1rem;
+}
+
+details summary:before {
+  content: "Huh?";
+}
+details[open] summary:before {
+  transition-delay: 1s content;
+  content: "Ok!";
+}
+
+summary {
+  cursor: pointer;
+  color: #428bca;
+  list-style: none;
+}
+
+summary:hover {
+  filter: brightness(140%);
+}
+
+details {
+  display: inline;
+}
+
+details + div {
+  transition: max-height 0.2s;
+  overflow: hidden;
+  max-height: 0;
+}
+
+details[open] + div {
+  transition: max-height 0.7s;
+  max-height: 1000px;
 }
 
 #top {
@@ -43,20 +71,8 @@ li ~ li {
 #title {
   font-size: 25px;
   margin-bottom: 22px;
-  grid-column: 1/4;
   font-weight: 500;
   line-height: 1.1;
-}
-
-#blurbText {
-  font-size: initial;
-  grid-column: 4;
-  grid-row: 1/5;
-  transition: opacity 0.2s, visibility 0.2s;
-}
-
-.blurbHidden {
-  display: none;
 }
 
 .gridLabel {
